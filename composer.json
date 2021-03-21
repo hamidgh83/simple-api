@@ -4,11 +4,14 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Application\\": "src/"
+            "Application\\": "src/",
+            "Core\\": "core/"
         }
     },
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "doctrine/dbal": "3.0.0",
+        "symfony/dotenv": "^5.2"
     },
     "require-dev": {
         "slevomat/coding-standard": "^6.4",
