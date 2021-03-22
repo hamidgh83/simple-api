@@ -23,6 +23,18 @@ class Request
         return $this->uri;
     }
 
+    public function getHeaders()
+    {
+        return getallheaders();
+    }
+
+    public function getHeader($key)
+    {
+        $headers = $this->getHeaders();
+
+        return $headers[$key] ?? null;
+    }
+
     public function getQueryParams()
     {
         return $_GET;
@@ -30,8 +42,26 @@ class Request
 
     public function getQueryParam($param, $default = null)
     {
-        $value = $_GET[$param] ?? $default;
+        $this->castNumericValue($_GET[$param] ?? $default);
+    }
 
+    public function getPosts()
+    {
+        $inputJSON  = file_get_contents('php://input');
+        $postedData = json_decode($inputJSON, true);
+
+        return $postedData;
+    }
+
+    public function getPost($key, $default = null)
+    {
+        $postedData = $this->getPosts();
+
+        return $postedData[$key] ?? $default;
+    }
+
+    protected function castNumericValue($value)
+    {
         if (is_numeric($value)) {
             $value = ($value == (int) $value) ? (int) $value : (float) $value;
         }
