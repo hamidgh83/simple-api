@@ -8,6 +8,8 @@ class Request
 
     private $requestMethod;
 
+    private $action;
+
     public function __construct()
     {
         $this->process();
@@ -67,6 +69,18 @@ class Request
         }
 
         return $value;
+    }
+
+    public function setAction($name)
+    {
+        $this->action = $name;
+
+        return $this;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
     }
 
     private function process()

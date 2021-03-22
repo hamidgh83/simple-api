@@ -33,8 +33,8 @@ class Application
     public function run()
     {
         try {
-            $controller = $this->getController();
             $action     = $this->getAction();
+            $controller = $this->getController();
             $response   = $controller->$action();
 
             if (! $response instanceof Response && ! $this->isJsonResponse($response)) {
@@ -85,11 +85,13 @@ class Application
     {
         $action = (isset($this->request->getUri()[2]) && strlen(trim($this->request->getUri()[2])) > 0) ? $this->request->getUri()[2] : null;
 
-        if (!is_null($action)) {
+        if (! is_null($action)) {
             $action = strtolower($this->request->getMethod()) . ucfirst(strtolower($action));
         } else {
             $action = $this->getDefaultAction();
         }
+
+        $this->request->setAction($action);
 
         return $action;
     }
