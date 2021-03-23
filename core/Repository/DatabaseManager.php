@@ -2,27 +2,31 @@
 
 namespace Core\Repository;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 
 class DatabaseManager
 {
     private static $instance = null;
-    
+
+    /**
+     * @var Connection
+     */
     private $dbConnection;
-  
+
     private function __construct()
     {
     }
-    
+
     public static function getInstance()
     {
         if (self::$instance == null) {
-            $dbManager = new DatabaseManager();
+            $dbManager      = new DatabaseManager();
             self::$instance = $dbManager->setDbConnection();
 
             return self::$instance;
         }
-    
+
         return self::$instance;
     }
 
@@ -44,7 +48,7 @@ class DatabaseManager
         ];
     }
 
-    public function getConnection()
+    public function getConnection(): Connection
     {
         return $this->dbConnection;
     }

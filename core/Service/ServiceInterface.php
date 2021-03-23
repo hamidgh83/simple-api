@@ -2,11 +2,9 @@
 
 namespace Core\Service;
 
-use Core\Repository\DatabaseManager;
+use Core\Repository\RepositoryInterface;
 
-interface ServiceInterface 
+interface ServiceInterface
 {
-    public function setDatabaseManager(DatabaseManager $dbManager);
-
-    public function getDatabaseManager(): DatabaseManager;
+    public function getRepository($name): RepositoryInterface;
 }

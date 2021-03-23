@@ -2,22 +2,17 @@
 
 namespace Core\Service;
 
-use Core\Repository\DatabaseManager;
+use Core\Exception\RepositoryNotFoundException;
+use Core\Repository\RepositoryInterface;
 
 abstract class AbstractService implements ServiceInterface
 {
-    private $dbManager;
-
-    public function setDatabaseManager(DatabaseManager $dbManager)
+    public function getRepository($name): RepositoryInterface
     {
-        $this->dbManager = $dbManager;
+        if (! class_exists($name)) {
+            throw new RepositoryNotFoundException();
+        }
 
-        return $this;
+        return new $name();
     }
-
-    public function getDatabaseManager(): DatabaseManager
-    {
-        return $this->dbManager;
-    }
-
-} 
+}
