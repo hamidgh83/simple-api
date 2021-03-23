@@ -3,6 +3,7 @@
 namespace Application\Controller;
 
 use Application\Model\User;
+use Application\Service\PostService;
 use Application\Service\UserService;
 use Core\Controller\AbstractController;
 use Core\Controller\RequiredAuthenticationInterface;
@@ -41,11 +42,25 @@ class AssignmentController extends AbstractController implements RequiredAuthent
 
     public function getPosts()
     {
-        return new Response();
+        $page     = $this->getRequest()->getQueryParam('page', 1);
+        $pageSize = $this->getRequest()->getQueryParam('pageSize', 100);
+        $posts    = $this->getPostService()->getByPage($page, $pageSize);
+        $items    = [];
+
+        while (($row = $posts->fetchAssociative()) !== false) {
+            $items[] = $row;
+        }
+
+        return new Response($items);
     }
 
     private function getUserService(): UserService
     {
         return $this->getService(UserService::class);
+    }
+
+    private function getPostService(): PostService
+    {
+        return $this->getService(PostService::class);
     }
 }
