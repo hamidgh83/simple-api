@@ -44,7 +44,7 @@ class Request
 
     public function getQueryParam($param, $default = null)
     {
-        $this->castNumericValue($_GET[$param] ?? $default);
+        return $this->castNumericValue($_GET[$param] ?? $default);
     }
 
     public function getPosts()
