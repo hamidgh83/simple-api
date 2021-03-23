@@ -8,6 +8,7 @@ use Application\Service\UserService;
 use Core\Controller\AbstractController;
 use Core\Controller\RequiredAuthenticationInterface;
 use Core\Http\Response;
+use Core\Model\UserInterface;
 
 class AssignmentController extends AbstractController implements RequiredAuthenticationInterface
 {
@@ -23,9 +24,9 @@ class AssignmentController extends AbstractController implements RequiredAuthent
         $request = $this->getRequest();
 
         $model = new User();
-        $model->setName($request->getPost('name'));
-        $model->setEmail($request->getPost('email'));
-        $model->setClientId($request->getPost('client_id'));
+        $model->setName($request->getPost('name'))
+            ->setEmail($request->getPost('email'))
+            ->setClientId($request->getPost('client_id'));
 
         $user = $this->getUserService()->register($model);
 
@@ -42,13 +43,15 @@ class AssignmentController extends AbstractController implements RequiredAuthent
 
     public function getPosts()
     {
+        $items    = [];
         $page     = $this->getRequest()->getQueryParam('page', 1);
         $pageSize = $this->getRequest()->getQueryParam('pageSize', 100);
-        $posts    = $this->getPostService()->getByPage($page, $pageSize);
-        $items    = [];
 
-        while (($row = $posts->fetchAssociative()) !== false) {
-            $items[] = $row;
+        if ($this->identity instanceof UserInterface) {
+            $posts = $this->getPostService()->getUserPosts($this->identity, $page, $pageSize);
+            while (($row = $posts->fetchAssociative()) !== false) {
+                $items[] = $row;
+            }
         }
 
         return new Response($items);

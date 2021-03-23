@@ -3,6 +3,7 @@
 namespace Application\Service;
 
 use Application\Repository\PostRepository;
+use Core\Model\UserInterface;
 use Core\Service\AbstractService;
 
 class PostService extends AbstractService
@@ -17,10 +18,10 @@ class PostService extends AbstractService
         $this->repository = $this->getRepository(PostRepository::class);
     }
 
-    public function getByPage($page = 1, $perPage = 100)
+    public function getUserPosts(UserInterface $user, $page = 1, $perPage = 100)
     {
         $offset = ($page - 1) * $perPage;
 
-        return $this->repository->getByPage($perPage, $offset);
+        return $this->repository->getUserPosts($user->getId(), $perPage, $offset);
     }
 }
