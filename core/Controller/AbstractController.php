@@ -2,12 +2,13 @@
 
 namespace Core\Controller;
 
-use Core\Auth\Token;
 use Core\Exception\UnauthorizedException;
+use Core\Factory\Factory;
 use Core\Http\Request as HttpRequest;
 use Core\Http\Response;
+use Core\Model\UserInterface;
 use Core\Service\ServiceInterface;
-use RuntimeException;
+use Core\Service\UserServiceInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
@@ -17,14 +18,19 @@ abstract class AbstractController implements ControllerInterface
     private $request;
 
     /**
+     * @var UserInterface
+     */
+    protected $identity;
+
+    /**
      * Constructor function
      *
      * @param HttpRequest $request
      */
     public function __construct(HttpRequest $request)
     {
-        $this->request = $request;
-        $this->authenticate();
+        $this->request  = $request;
+        $this->identity = $this->authenticate();
     }
 
     private function authenticate()
@@ -33,11 +39,21 @@ abstract class AbstractController implements ControllerInterface
             $actions = $this->authenticatedActions();
 
             if (in_array($this->getRequest()->getAction(), $actions)) {
-                if (! Token::validate($this->getRequest()->getHeader('Authorization'))) {
+                $token = $this->getRequest()->getToken();
+                $user  = $this->getUserService()->authenticate($token);
+
+                if (! $user instanceof UserInterface) {
                     throw new UnauthorizedException();
                 }
+
+                return $user;
             }
         }
+    }
+
+    private function getUserService(): UserServiceInterface
+    {
+        return $this->getService(UserServiceInterface::class);
     }
 
     /**
@@ -63,20 +79,16 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * Get aan identified service.
+     * Get an identified service.
      *
      * @param string $service
      * @param mixed ...$options
-     *
-     * @return ServiceInterface
      */
     public function getService(string $service, ...$options): ServiceInterface
     {
-        if (! class_exists($service)) {
-            throw new RuntimeException(sprintf("The class %s does not exist.", $service), 500);
-        }
+        $factory = new Factory($service, $options);
 
-        return new $service(...$options);
+        return $factory->make();
     }
 
     public function __call($name, $arguments)

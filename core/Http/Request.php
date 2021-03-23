@@ -37,6 +37,11 @@ class Request
         return $headers[$key] ?? null;
     }
 
+    public function getToken()
+    {
+        return str_replace("Bearer ", "", $this->getHeader('Authorization'));
+    }
+
     public function getQueryParams()
     {
         return $_GET;
