@@ -18,10 +18,10 @@ class PostService extends AbstractService
         $this->repository = $this->getRepository(PostRepository::class);
     }
 
-    public function getUserPosts(UserInterface $user, $page = 1, $perPage = 100)
+    public function getAll($page = 1, $perPage = 100)
     {
         $offset = ($page - 1) * $perPage;
 
-        return $this->repository->getUserPosts($user->getId(), $perPage, $offset);
+        return $this->repository->getAllPosts($perPage, $offset);
     }
 }

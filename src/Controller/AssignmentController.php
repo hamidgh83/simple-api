@@ -48,7 +48,7 @@ class AssignmentController extends AbstractController implements RequiredAuthent
         $pageSize = $this->getRequest()->getQueryParam('pageSize', 100);
 
         if ($this->identity instanceof UserInterface) {
-            $posts = $this->getPostService()->getUserPosts($this->identity, $page, $pageSize);
+            $posts = $this->getPostService()->getAll($page, $pageSize);
             while (($row = $posts->fetchAssociative()) !== false) {
                 $items[] = $row;
             }
@@ -56,6 +56,13 @@ class AssignmentController extends AbstractController implements RequiredAuthent
 
         return new Response($items);
     }
+
+    // public function getStats()
+    // {
+    //     $stats = $this->getPostService()->getStats();
+
+    //     return new Response($stats);
+    // }
 
     private function getUserService(): UserService
     {
