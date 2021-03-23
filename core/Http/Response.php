@@ -21,7 +21,7 @@ class Response
 
     /**
      * @param array|null $body
-     * 
+     *
      * @return Response
      */
     public function setBody($body = [])
@@ -65,7 +65,7 @@ class Response
         if (is_null($this->getMessage())) {
             unset($response['message']);
         }
-        
+
         // Eliminate body from the response in case of error
         if ($this->getCode() > 299) {
             unset($response['body']);
