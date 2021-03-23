@@ -58,7 +58,7 @@ class Response
         $response = [
             'status'  => $this->getCode(),
             'message' => $this->getMessage(),
-            'body'    => $this->getBody(),
+            'data'    => $this->getBody(),
         ];
 
         // Eliminate message from the response in case of success
@@ -68,7 +68,7 @@ class Response
 
         // Eliminate body from the response in case of error
         if ($this->getCode() > 299) {
-            unset($response['body']);
+            unset($response['data']);
         }
 
         return json_encode($response);
