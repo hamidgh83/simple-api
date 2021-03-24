@@ -3,6 +3,7 @@
     <description>CodeSniffer configuration file</description>
 
     <!-- Files -->
+    <file>./config</file>
     <file>./core</file>
     <file>./src</file>
 
