@@ -14,7 +14,13 @@ The structure of the directories is as follow:
 
 ### Dependencies and packages
 
-The projects requires **PHP 7.4** and uses two main packages one for making queries to the database and another for sending HTTP requests to call the APIs. 
+The projects requires **PHP 7.4** and uses two main packages one for making queries to the database and another one for sending HTTP requests to call the APIs. Here are the packages:
+
+```php
+"doctrine/dbal": "3.0.0",
+"symfony/dotenv": "^5.2",
+"guzzlehttp/guzzle": "^7.3"
+```
 
 ### Installation
 
