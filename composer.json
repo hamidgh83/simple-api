@@ -11,7 +11,8 @@
     "require": {
         "php": "^7.4",
         "doctrine/dbal": "3.0.0",
-        "symfony/dotenv": "^5.2"
+        "symfony/dotenv": "^5.2",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
         "slevomat/coding-standard": "^6.4",
