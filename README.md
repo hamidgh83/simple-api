@@ -52,7 +52,7 @@ The application provides two APIs as follow:
 GET  http://localhost:8080/fetch
 ```
 
-1. Get stats calculated from stored data
+2. Get stats calculated from stored data
 
 ```php
 GET http://localhost:8080/stats
