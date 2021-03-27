@@ -3,8 +3,8 @@
 namespace Application\Service;
 
 use Application\Repository\PostRepository;
-use Core\Model\UserInterface;
 use Core\Service\AbstractService;
+use Doctrine\DBAL\Result;
 
 class PostService extends AbstractService
 {
@@ -18,6 +18,14 @@ class PostService extends AbstractService
         $this->repository = $this->getRepository(PostRepository::class);
     }
 
+    /**
+     * Get a list of paginated posts
+     *
+     * @param integer $page
+     * @param integer $perPage
+     *
+     * @return Result|int
+     */
     public function getAll($page = 1, $perPage = 100)
     {
         $offset = ($page - 1) * $perPage;

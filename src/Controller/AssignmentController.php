@@ -10,8 +10,16 @@ use Core\Controller\RequiredAuthenticationInterface;
 use Core\Http\Response;
 use Core\Model\UserInterface;
 
+/**
+ * This controller is to register a user and the post of that user
+ */
 class AssignmentController extends AbstractController implements RequiredAuthenticationInterface
 {
+    /**
+     * Returns list of actions that requires authentication.
+     *
+     * @return array
+     */
     public function authenticatedActions(): array
     {
         return [
@@ -19,6 +27,11 @@ class AssignmentController extends AbstractController implements RequiredAuthent
         ];
     }
 
+    /**
+     * Register a user and get token.
+     *
+     * @return Response
+     */
     public function postRegister()
     {
         $request = $this->getRequest();
@@ -41,6 +54,11 @@ class AssignmentController extends AbstractController implements RequiredAuthent
         ]);
     }
 
+    /**
+     * Returns paginated posts belong to the current user.
+     *
+     * @return Response
+     */
     public function getPosts()
     {
         $items    = [];
@@ -56,13 +74,6 @@ class AssignmentController extends AbstractController implements RequiredAuthent
 
         return new Response($items);
     }
-
-    // public function getStats()
-    // {
-    //     $stats = $this->getPostService()->getStats();
-
-    //     return new Response($stats);
-    // }
 
     private function getUserService(): UserService
     {

@@ -20,9 +20,20 @@ To install the application first clone the project and change to the directory.
 git clone https://github.com/hamidgh83/simple-api.git
 ```
 
-Then **create a database** and add the connection information in **.env** file. Install the package using composer.
+**create a database**, import the data and add the connection information in **.env** file. Then install the package using composer.
 
 ```bash
 composer install
 ```
 
+### How to call APIs
+
+The application provides two endpoints:
+
+1. Register a user with a short-live token
+   
+        POST  http://localhost/assignment/register
+
+2. Get a list of posts by a user
+
+        GET http://localhost/assignment/posts
