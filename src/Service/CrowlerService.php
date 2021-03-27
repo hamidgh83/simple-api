@@ -21,12 +21,12 @@ class CrowlerService extends AbstractService
      */
     public function register()
     {
-        $url      = rtrim($_ENV('BASE_URL'), '/') . "/assignment/register";
+        $url      = rtrim($_ENV['BASE_URL'], '/') . "/assignment/register";
         $headers  = ['Content-Type' => 'application/json'];
         $body     = [
-            "client_id" => $_ENV('CLIENT_ID') ?? null,
-            "email" => $_ENV('EMAIL') ?? null,
-            "name" => $_ENV('NAME'),
+            "client_id" => $_ENV['CLIENT_ID'] ?? null,
+            "email" => $_ENV['EMAIL'] ?? null,
+            "name" => $_ENV['NAME'],
         ];
         $params   = ['headers' => $headers, 'body' => json_encode($body)];
         $response = $this->client->post($url, $params);
@@ -44,7 +44,7 @@ class CrowlerService extends AbstractService
      */
     public function fetchData($token, $page = 1)
     {
-        $url      = rtrim($_ENV('BASE_URL'), '/') . "/assignment/posts";
+        $url      = rtrim($_ENV['BASE_URL'], '/') . "/assignment/posts";
         $url      = sprintf("%s?sl_token=%s&page=%d", $url, $token, $page);
         $response = $this->client->request('GET', $url);
 
