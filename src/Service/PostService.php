@@ -32,4 +32,16 @@ class PostService extends AbstractService
 
         return $this->repository->getAllPosts($perPage, $offset);
     }
+
+    /**
+     * Store posts
+     *
+     * @param array $data
+     *
+     * @return Result|int
+     */
+    public function save($data)
+    {
+        return $this->repository->store($data);
+    }
 }
