@@ -1,6 +1,6 @@
 ## Overview
 
-This project is a simpe API to fetch and manipulate JSON data from a fictional social network REST API. It doesn't use any common framework and everything has been developed with pure PHP.
+This project is to fetch and manipulate JSON data from a fictional social network REST API. It doesn't use any common framework and everything has been developed with pure PHP.
 
 ### Project Skeleton
 
@@ -12,6 +12,10 @@ The structure of the directories is as follow:
 * **public directory** contains the public files that are visible to the web server
 * **src** contains controllers, services and repositories of the application
 
+### Dependencies and packages
+
+The projects requires **PHP 7.4** and uses two main packages one for making queries to the database and another for sending HTTP requests to call the APIs. 
+
 ### Installation
 
 To install the application first clone the project and change to the directory. 
@@ -20,20 +24,32 @@ To install the application first clone the project and change to the directory.
 git clone https://github.com/hamidgh83/simple-api.git
 ```
 
-**create a database**, import the data and add the connection information in **.env** file. Then install the package using composer.
+**create a database**, import the schema and add the connection information in **.env** file. Then install the package using composer.
 
 ```bash
 composer install
 ```
 
-### How to call APIs
+### Running the application
 
-The application provides two endpoints:
+After finishing installation, you can change directory to the project toot and run it with php built-in web server:
 
-1. Register a user with a short-live token
-   
-        POST  http://localhost/assignment/register
+```bash
+php -S localhost:8080 -t public/
+```
 
-2. Get a list of posts by a user
+The application provides two APIs as follow:
 
-        GET http://localhost/assignment/posts
+1. Fetch data from supermetrics API and store into database
+
+```php
+GET  http://localhost:8080/fetch
+```
+
+1. Get stats calculated from stored data
+
+```php
+GET http://localhost:8080/stats
+```
+
+**NOTE:** *Make sure that you call the the above endpoints sequentially.*
